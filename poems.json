@@ -1,0 +1,48 @@
+[
+  {
+    "img":"./assets/wife_close.jpeg",
+    "title":"All I've Asked From You",
+    "text":"All I've asked from you is you and you again from your love I've already spread our feast I don't remember waht I dreamt last night all I know is I woke up drunk",
+    "explain":""
+  },
+  {
+    "img":"./assets/first_or.jpeg",
+    "title":"I Only See Myself",
+    "text":"I only see myself coming and going for you I only see myself wishing and looking for you even if I falter everywhere in this world isn't it becuase I see nothing but you",
+    "explain":"Reflects on letting go."
+  } , {
+    "img":"./assets/heart_kiss.jpeg",
+    "title":"Your Love Is",
+    "text":"Your love is in place of religion and faithfor me as long as I live I don't want to learn patience in love I thought to leave you alone for a few days I simply couldn't why pretend now",
+    "explain":"This poem evokes beginnings."
+  },
+  {
+    "img":"./assets/close_pic.jpeg",
+    "title":"Life Without You Is A Waste",
+    "text":"Life Without You Is A Waste",
+    "explain":"Life without you is a waste how can it be named life if you're not there I swear a life without you will not be called anything but death"
+  } , {
+    "img":"./assets/laugh.jpeg",
+    "title":"You're Like A Flower",
+    "text":" You're like a flower born from the essence oflaughter good fortune and happiness you're free and luscious like a blossoming branch.",
+    "explain":"This poem evokes beginnings."
+  },
+{
+  "img":"./assets/dwayne_jail.jpeg",
+  "title":"Restless",
+  "text":"now i go to the door\nnow i go on the roof\ntill i see your face\ni'll never know rest\n\nneighbors speak of me\nwhen you are awayas meek or mad\nbut when you return\neverything subsides\nthis heart of mine\ntears itself apart\nand seeks no joy\nbut only wants to know\nwhen you'll arrive\nbut when you return\n\nand a wine-server is around\ni hold a cup\nfondle your hair and\ncaress your face\njust come and see me\nletting go of my wish\nletting go of my pilgrimage\nkeeping one wish in my heart\nmaking love to your desires",
+  "explain":"Reflects on letting go."
+},  {
+"img":"./assets/heads_green.jpeg",
+"title":"Only You",
+"text":"Only you\nI choose among the entire world.\nIs it fair of you\nletting me be unhappy?\n\nMy heart is a pen in your hand.\nIt is all up to you\nto write me happy or sad.\n\nI see only what you reveal\nand live as you say.\nAll my feelings have the color\nyou desire to paint.\n\nFrom the beginning to the end,\nno one but you.\n\nPlease make my future\nbetter than the past.\n\nWhen you hide I change\nto a Godless person,\nand when you appear,\nI find my faith.\n\nDon't expect to find\nany more in me\nthan what you give.\n\nDon't search for\nhidden pockets because\nI've shown you that\nall I have is all you gave.",
+"explain":"This poem evokes beginnings."
+  },
+{
+  "img":"./assets/christmas_tree.jpeg",
+  "title":"She Walks Through Dawn",
+  "text":"She walks through dawn as if the sun\n\nhas chosen her for its first embrace.\n\nEvery step a gentle hymn,\n\nevery glance a quiet flame.",
+  "explain":"Reflects on letting go."
+} 
+
+]
