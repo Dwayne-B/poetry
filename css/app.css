@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #0b0b10;
+  font-family: system-ui, sans-serif;
+}
+
+.scroller {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+
+.column {
+  
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1; /* columns share available space */
+  transition: transform 0.3s ease; /* smooth stagger effect */
+}
+
+.card img {
+  width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
