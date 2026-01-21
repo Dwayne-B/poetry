@@ -1,4 +1,5 @@
 const scroller = document.querySelector(".scroller");
+const header = document.querySelector(".header");
 
 let poems = [];
 const columns = [];
@@ -86,4 +87,24 @@ window.addEventListener("resize", () => {
   createColumns();
   distributeCards();
   applyStagger(0);
+});
+
+
+//hide header
+
+let lastScrollTop = 0;
+scroller.addEventListener("scroll", () => {
+  const scrollTop = scroller.scrollTop;
+  
+  // Hide header when scrolling down
+  if (0 < scrollTop) {
+    console.log('hidden',"lastScrollTop:", lastScrollTop, " scrollTop:", scrollTop);
+    header.classList.add("hidden");
+  } else {
+    // Show header when scrolling up
+    console.log("lastScrollTop:", lastScrollTop, " scrollTop:", scrollTop);
+    header.classList.remove("hidden");
+  }
+
+  lastScrollTop = scrollTop < 0 ? 0 : scrollTop; // for mobile bounce
 });

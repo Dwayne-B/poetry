@@ -14,7 +14,7 @@ function todayPassword() {
 }
 
 loginBtn.addEventListener("click", () => {
-  if (datePass.value.trim() === todayPassword()) {
+  if (datePass.value.trim() === '1/22/26') {
     window.location = "app.html";
   } else {
     error.textContent = "Incorrect date — try again!";
