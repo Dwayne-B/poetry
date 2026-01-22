@@ -3,107 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Poetry App</title>
+<title>My Love - Poetry App</title>
 <style>
+/* === GLOBAL STYLES === */
 body {
-  margin:0;
-  font-family:system-ui,sans-serif;
-  background:#0b0b10;
-  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  background: #0b0b10;
+  font-family: system-ui, sans-serif;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
 }
+
 .scroller {
-  display:flex;
-  gap:2rem;
-  padding:7rem 2rem 2rem 2rem;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: 7rem 2rem 1rem 2rem;
+  display: flex;
+  gap: 2rem;
+  box-sizing: border-box;
+  perspective: 1px; /* smooth 3d transforms */
 }
+
 .column {
-  display:flex;
-  flex-direction:column;
-  gap:2rem;
-  flex:1;
-}
-.card img {
-  width:100%;
-  border-radius:16px;
-  object-fit:cover;
-  cursor:pointer;
-  display:block;
-  transform: translateZ(0);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1;
   will-change: transform;
 }
 
-/* HEADER */
+.card img {
+  width: 100%;
+  height: 15rem;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* HEADER / SELF-DRAW TEXT */
 .header {
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100px;
-  display:flex;
-  justify-content:center; align-items:center;
-  pointer-events:none;
-  z-index:1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 1000;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: transform 0.5s ease, opacity 0.5s ease;
+  will-change: transform, opacity;
 }
 .header.hidden {
-  transform:translateY(-120%);
-  opacity:0;
+  transform: translateY(-120%);
+  opacity: 0;
+}
+.self-draw-text {
+  width: 100%;
+  height: 100px;
 }
 .self-draw-text text {
-  fill:none;
-  stroke:#fd709e;
-  stroke-width:2;
-  stroke-dasharray:600;
-  stroke-dashoffset:600;
-  animation:draw 3s linear forwards;
-  font-size:72px;
-  font-family:"Love Light", cursive;
-  text-anchor:middle;
-  dominant-baseline:middle;
+  fill: none;
+  stroke: #fd709e;
+  stroke-width: 2;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: draw 3s linear forwards;
+  font-size: 72px;
+  font-family: "Love Light", cursive;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  will-change: stroke-dashoffset;
 }
-@keyframes draw { to { stroke-dashoffset:0; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
 
 /* MODAL */
 .modal {
-  display:none;
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.8);
-  z-index:2000;
-  align-items:center;
-  justify-content:center;
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0,0,0,0);
+  opacity: 0;
+  transition: background 0.5s ease, opacity 0.5s ease;
+  will-change: opacity;
 }
+.modal.show { opacity: 1; background: rgba(0,0,0,0.8); }
 .modal-content {
-  background:#111111c2;
-  color:#fff;
-  border-radius:12px;
-  padding:2rem;
-  max-width:90%;
-  max-height:90%;
-  overflow:auto;
-  transform: scale(0.8);
-  opacity:0;
+  color: #fff;
+  position: absolute;
+  background: #111111c2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  border-radius: 12px;
+  opacity: 0;
+  transform: translate3d(0,0,0) scale(0.8);
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease, border-radius 0.5s ease;
+  will-change: transform, opacity;
 }
+.modal-content.show { opacity: 1; transform: translate3d(0,0,0) scale(1); }
 .closeBtn {
-  position:absolute;
-  top:1rem;
-  right:1rem;
-  font-size:2rem;
-  cursor:pointer;
-  color:#fff;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  font-size: 2rem;
+  color: #fff;
+  z-index: 1010;
 }
+body.modal-open { overflow: hidden; }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <svg viewBox="0 0 600 100" class="self-draw-text">
     <text x="50%" y="50%">1/22/26</text>
   </svg>
 </div>
 
+<!-- SCROLLER / GRID -->
 <div id="scroller" class="scroller"></div>
 
+<!-- MODAL -->
 <div id="imageModal" class="modal">
   <div class="modal-content">
     <span class="closeBtn">&times;</span>
@@ -114,112 +151,127 @@ body {
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.1/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.1/ScrollTrigger.min.js"></script>
-
 <script>
-// --- DATA (replace with your poems) ---
-const poems = [
-  {img:"./assets/wife_close.jpeg",title:"All I've Asked From You",text:"All I've asked...",explain:""},
-  {img:"./assets/first_or.jpeg",title:"I Only See Myself",text:"I only see myself...",explain:"Reflects on letting go."},
-  {img:"./assets/heart_kiss.jpeg",title:"Your Love Is",text:"Your love is...",explain:"Evokes beginnings."},
-  {img:"./assets/close_pic.JPEG",title:"Life Without You Is A Waste",text:"Life Without You...",explain:"Life without you is a waste"},
-  {img:"./assets/laugh.jpeg",title:"You're Like A Flower",text:"You're like a flower...",explain:"Evokes beginnings."},
-  {img:"./assets/dwayne_jail.jpeg",title:"Restless",text:"now i go to the door...",explain:"Reflects on letting go."},
-  {img:"./assets/heads_green.jpeg",title:"Only You",text:"Only you...",explain:"Evokes beginnings."},
-  {img:"./assets/christmas_tree.JPEG",title:"She Walks Through Dawn",text:"She walks through dawn...",explain:"Reflects on letting go."}
-];
-
-// --- ELEMENTS ---
 const scroller = document.getElementById("scroller");
 const header = document.querySelector(".header");
+const MAX_STAGGER = 50;
+let poems = [];
+const columns = [];
+
+// MODAL
 const modal = document.getElementById("imageModal");
 const modalContent = modal.querySelector(".modal-content");
 const poemTitle = document.getElementById("poemTitle");
 const poemText = document.getElementById("poemText");
 const poemExplain = document.getElementById("poemExplain");
 const closeBtn = modal.querySelector(".closeBtn");
+let lastImageRect;
 
-// --- CREATE COLUMNS & CARDS ---
-function getColumnCount(){
-  const w=window.innerWidth;
-  if(w<600) return 2;
-  if(w<900) return 3;
-  if(w<1200) return 4;
+// HELPER FUNCTIONS
+function getColumnCount() {
+  const w = window.innerWidth;
+  if (w < 600) return 2;
+  if (w < 900) return 3;
+  if (w < 1200) return 4;
   return 5;
 }
 
-function createColumns(){
-  scroller.innerHTML="";
-  const count=getColumnCount();
-  for(let i=0;i<count;i++){
-    const col=document.createElement("div");
-    col.className="column";
+function createColumns() {
+  const colCount = getColumnCount();
+  scroller.innerHTML = "";
+  columns.length = 0;
+  for (let i=0;i<colCount;i++){
+    const col = document.createElement("div");
+    col.className = "column";
+    columns.push(col);
     scroller.appendChild(col);
   }
 }
 
-function distributeCards(){
-  const cols=document.querySelectorAll(".column");
+function distributeCards() {
+  if(!poems.length) return;
+  columns.forEach(c=>c.innerHTML="");
   poems.forEach((p,i)=>{
-    const card=document.createElement("div");
+    const card = document.createElement("div");
     card.className="card";
     card.innerHTML=`<img src="${p.img}" data-title="${p.title}" data-text="${p.text}" data-explain="${p.explain}">`;
-    card.querySelector("img").addEventListener("click",()=>openModal(p));
-    const colIndex=i%cols.length;
-    cols[colIndex].appendChild(card);
+    card.querySelector("img").addEventListener("click", e=>openModal(p,e.target));
+    columns[i%columns.length].appendChild(card);
   });
 }
 
-// --- MASONRY OFFSET ---
-function applyMasonry(){
-  const cols=document.querySelectorAll(".column");
-  cols.forEach((col,i)=>{
-    const offset = (i%2)*40; // stagger odd columns
-    col.style.transform = `translateY(${offset}px)`;
+function applyStagger(fraction){
+  columns.forEach((c,i)=>{
+    const offset = (1-fraction)*MAX_STAGGER*(i%2);
+    c.style.transform=`translate3d(0,${offset}px,0)`;
   });
 }
 
-// --- PARALLAX ---
-function applyParallax(){
-  gsap.utils.toArray(".card img").forEach((img)=>{
-    gsap.to(img,{yPercent:15,ease:"none",scrollTrigger:{
-      trigger:img,
-      start:"top bottom",
-      end:"bottom top",
-      scrub:true
-    }});
+// === SMOOTH SCROLL WITH RAF ===
+let lastScroll=0;
+function onScroll(){
+  const scrollTop = scroller.scrollTop;
+  const scrollHeight = scroller.scrollHeight - scroller.clientHeight;
+  const fraction = Math.min(Math.max(scrollTop/scrollHeight,0),1);
+  applyStagger(fraction);
+
+  if(scrollTop >0) header.classList.add("hidden");
+  else header.classList.remove("hidden");
+
+  lastScroll=scrollTop;
+  requestAnimationFrame(onScroll);
+}
+
+// === MODAL ===
+function openModal(data,imgEl){
+  if(!imgEl) return;
+  document.body.classList.add("modal-open");
+  lastImageRect = imgEl.getBoundingClientRect();
+  modalContent.style.transform=`translate3d(${lastImageRect.left+lastImageRect.width/2-window.innerWidth/2}px,${lastImageRect.top+lastImageRect.height/2-window.innerHeight/2}px,0) scale(${lastImageRect.width/window.innerWidth},${lastImageRect.height/window.innerHeight})`;
+  modalContent.style.borderRadius="50%";
+  modalContent.style.opacity="0";
+  poemTitle.textContent=data.title;
+  poemText.textContent=data.text;
+  poemExplain.textContent=data.explain;
+  modal.style.display="block";
+  requestAnimationFrame(()=>{
+    modal.classList.add("show");
+    modalContent.classList.add("show");
+    modalContent.style.transform="translate3d(0,0,0) scale(1)";
+    modalContent.style.borderRadius="12px";
+    modalContent.style.opacity="1";
   });
 }
 
-// --- MODAL ---
-function openModal(p){
-  poemTitle.textContent=p.title;
-  poemText.textContent=p.text;
-  poemExplain.textContent=p.explain;
-  modal.style.display="flex";
-  gsap.to(modalContent,{scale:1,opacity:1,duration:0.5,ease:"power2.out"});
-}
 function closeModal(){
-  gsap.to(modalContent,{scale:0.8,opacity:0,duration:0.4,ease:"power2.in",onComplete:()=>modal.style.display="none"});
+  if(!lastImageRect) return;
+  modalContent.style.opacity="0";
+  modalContent.style.transform=`translate3d(${lastImageRect.left+lastImageRect.width/2-window.innerWidth/2}px,${lastImageRect.top+lastImageRect.height/2-window.innerHeight/2}px,0) scale(${lastImageRect.width/window.innerWidth},${lastImageRect.height/window.innerHeight})`;
+  modalContent.style.borderRadius="50%";
+  modal.classList.remove("show");
+  modalContent.addEventListener("transitionend",()=>{
+    modal.style.display="none";
+    document.body.classList.remove("modal-open");
+  },{once:true});
 }
+
 closeBtn.addEventListener("click",closeModal);
 
-// --- HEADER HIDE AT TOP ONLY ---
-window.addEventListener("scroll",()=>{
-  if(window.scrollY<=0) header.classList.remove("hidden");
-  else header.classList.add("hidden");
-});
-
-// --- INIT ---
-function init(){
+// === LOAD POEMS ===
+fetch("poems.json").then(r=>r.json()).then(data=>{
+  poems=data;
   createColumns();
   distributeCards();
-  applyMasonry();
-  applyParallax();
-}
-init();
-window.addEventListener("resize",init);
+  applyStagger(0);
+});
+
+// INITIALIZE
+requestAnimationFrame(onScroll);
+window.addEventListener("resize",()=>{
+  createColumns();
+  distributeCards();
+  applyStagger(0);
+});
 </script>
 </body>
 </html>
