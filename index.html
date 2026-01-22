@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Love</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple_icon.png">
+<link rel="icon"  sizes="32x32" href="/assets/apple_icon.png">
+<link rel="shortcut icon" href="/icons/favicon.ico">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Poetry">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Love+Light&display=swap" rel="stylesheet">
@@ -18,6 +24,15 @@ body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
+  background: hsla(285, 21%, 15%, 1);
+
+background: linear-gradient(90deg, hsla(285, 21%, 15%, 1) 0%, hsla(278, 84%, 7%, 1) 100%);
+
+background: -moz-linear-gradient(90deg, hsla(285, 21%, 15%, 1) 0%, hsla(278, 84%, 7%, 1) 100%);
+
+background: -webkit-linear-gradient(90deg, hsla(285, 21%, 15%, 1) 0%, hsla(278, 84%, 7%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2B1F2F", endColorstr="#170323", GradientType=1 );
 }
 
 .scroller {
@@ -97,7 +112,7 @@ body {
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: scroll;
   background: rgba(0,0,0,0);
   opacity: 0;
   transition: background 0.5s ease, opacity 0.5s ease;
@@ -105,6 +120,7 @@ body {
 }
 .modal.show { opacity: 1; background: rgba(0,0,0,0.8); }
 .modal-content {
+ 
   color: #fff;
   position: absolute;
   background: #111111c2;
@@ -126,11 +142,24 @@ body {
   top: 1rem;
   right: 1rem;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 3rem;
   color: #fff;
   z-index: 1010;
 }
+#poemTitle {
+  margin-top: 4rem;
+  font-size: 2.25rem;
+}
 body.modal-open { overflow: hidden; }
+#poemText,#poemExplain {
+  font-size: 1.2rem;
+    padding: .5rem 3rem;
+  line-height: 2rem;
+  
+}
+h4 {
+  font-size: 2rem;
+}
 </style>
 </head>
 <body>
